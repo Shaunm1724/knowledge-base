@@ -1,0 +1,7 @@
+<form action="{{ route('chat.request') }}" method="POST">
+    @csrf
+    <div>
+        <label for="text">Chat with gemini</label>
+        <textarea id="text" name="text"></textarea>
+    </div>
+</form>
