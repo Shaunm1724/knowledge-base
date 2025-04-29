@@ -4,4 +4,5 @@
         <label for="text">Chat with gemini</label>
         <textarea id="text" name="text"></textarea>
     </div>
+    <button type="submit">Submit</button>
 </form>

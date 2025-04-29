@@ -58,12 +58,14 @@ class DocumentController extends Controller
         ];
 
         // make gemini api call
-        $response = Http::withHeader([
+        $response = Http::withHeaders([
             'Content-Type' => 'application/json',
         ])->post($geminiUrl.$geminiApiKey, [
             'contents' => $promptText,
         ]);
 
-        
+        $reply = $response->json()['candidates'][0]['content']['parts'][0]['text'] ?? "No answer found.";
+
+        return view('chat-response', ['reply' => $reply,]);
     }
 }
