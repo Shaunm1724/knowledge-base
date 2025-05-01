@@ -1,1 +1,1 @@
-### Gemini chat with a knowledge base
+### Gemini chat with a knowledge base in laravel
