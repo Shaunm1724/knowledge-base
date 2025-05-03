@@ -47,6 +47,10 @@ class DocumentController extends Controller
         $promptText = [
             [
                 'role' => 'user',
+                'parts' => [['text' => "If no documents only then answer on your own"]]
+            ],
+            [
+                'role' => 'user',
                 'parts' => [[
                     'text' => "Answer the following question based only on the given documents.\n\nDocuments:\n$context"
                 ]]
