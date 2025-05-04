@@ -1,3 +1,4 @@
+<h1>Gemini chat form</h1>
 <form action="{{ route('chat.request') }}" method="POST">
     @csrf
     <div>
