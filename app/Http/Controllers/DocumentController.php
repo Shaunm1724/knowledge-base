@@ -36,14 +36,19 @@ class DocumentController extends Controller
         $queryText = $request->input('text');
         $geminiUrl = config('app.gemini_url');
         $geminiApiKey = config('app.gemini_api_key');
-
-        // get the document matching the query
-        $document = Document::where('content', 'like', "%$queryText%")->limit(3)->get();
-
-        // get only the content from all the found documents for context
-        $context = $document->pluck('content')->implode("\n\n");
-
-        // create a prompt text
+        
+        // Use Laravel Scout to search the model for the query
+        $documents = Document::search($queryText)->take(3)->get();
+        
+        // If no documents found, provide an empty context
+        $context = '';
+        
+        if ($documents->isNotEmpty()) {
+            // Get only the content from all the found documents for context
+            $context = $documents->pluck('content')->implode("\n\n");
+        }
+        
+        // Create a prompt text
         $promptText = [
             [
                 'role' => 'user',
@@ -60,8 +65,8 @@ class DocumentController extends Controller
                 'parts' => [[ 'text' => $queryText ]]
             ]
         ];
-
-        // make gemini api call
+        
+        // Make Gemini API call
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
         ])->post($geminiUrl.$geminiApiKey, [

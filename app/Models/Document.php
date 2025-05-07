@@ -12,4 +12,13 @@ class Document extends Model
         'title',
         'content',
     ];
+
+    public function toSearchableArray()
+    {
+        return [
+            'id' => $this->id,
+            'content' => $this->content,
+        ];
+    }
+
 }
